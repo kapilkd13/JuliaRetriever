@@ -1,7 +1,7 @@
 module retriever
 using DataFrames   #using Dataframe package
 
-export install,fetch,datasets   #available for calling directly
+export install,fetch,datasets,download   #available for calling directly
 
 function run_shell_cmd(command=`retriever`)  #function to run commands on shell
   Base.run(`$command`)
@@ -55,6 +55,18 @@ function fetch(dataset)
   end
   return out
 end
+
+
+function download(dataset; path=".",sub_dir=false, log_dir=nothing)
+  if sub_dir
+    command = `retriever download $dataset -p $path --subdir`
+  else
+    command = `retriever download $dataset -p $path`
+  end
+  run_shell_cmd(command)
+end
+
+
 
 
 function datasets()           #lists all the available datasets
